@@ -6,18 +6,13 @@ type LanguageContextType = { lang: Lang; toggleLang: () => void }
 
 const LanguageContext = createContext<LanguageContextType>({} as LanguageContextType)
 
-export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
-  const [lang, setLang] = useState<Lang>("en")
-
-  useEffect(() => {
-    const stored = localStorage.getItem("lang") as Lang
-    if (stored) setLang(stored)
-  }, [])
+export const LanguageProvider = ({ children, defaultLang }: { children: React.ReactNode, defaultLang: Lang }) => {
+  const [lang, setLang] = useState<Lang>(defaultLang)
 
   const toggleLang = () => {
     const next = lang === "en" ? "pt" : "en"
     setLang(next)
-    localStorage.setItem("lang", next)
+    document.cookie = `lang=${next}; path=/; max-age=31536000`
   }
 
   return (
