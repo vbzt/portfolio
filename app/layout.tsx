@@ -13,8 +13,14 @@ const workSans = Work_Sans({
 
 export const metadata: Metadata = {
   title: "Vitor Buzato",
-  description: "Portfolio",
-};
+  description: "Full-Stack developer & Software Engineering student @FIAP.",
+  openGraph: {
+    title: "Vitor Buzato",
+    description: "Full-Stack developer & Software Engineering student @FIAP.",
+    url: "https://bzt.vercel.app",
+    siteName: "Vitor Buzato",
+  },
+}
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const cookieStore = await cookies()
