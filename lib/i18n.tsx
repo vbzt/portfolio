@@ -20,9 +20,11 @@ export const t = {
     projectsPage: {
       nomuz:   { category: "TCC · 2025",      title: "Nomuz",   role: "Tech Lead & Backend", description: "Platform that centralizes case management and communication between lawyers, clients and associates in a secure, private environment built for legal confidentiality.", techs: ["NestJS", "Next.js", "PostgreSQL", "WebSockets", "E2E Encryption"], github: "https://github.com/vbzt/Nomuz" },
       crumbly: { category: "Personal · 2024", title: "Crumbly", role: "Solo",                description: "Backend API for bakery management. Authentication, stock control, sales and order tracking.", techs: ["NestJS", "PrismaORM", "MySQL", "TypeScript"], github: "https://github.com/vbzt/Crumbly" },
-      any2any: { category: "Personal · 2024", title: "Any2Any", role: "Solo",                description: "Client-side tool for unlimited multimedia file conversion. All processing runs locally. No uploads, no limits.", techs: ["Vite", "TypeScript"], github: "https://github.com/vbzt/Any2Any", deploy: "https://anytoany.vercel.app/" },
+      any2any: { category: "Personal · 2024", title: "Any2Any", role: "Solo",                description: "Client-side tool for unlimited multimedia file conversion. All processing runs locally. No uploads, no limits.", techs: ["Vite", "TypeScript", "FFMPEG"], github: "https://github.com/vbzt/Any2Any", deploy: "https://anytoany.vercel.app/" },
       ecoleaf: { category: "School · 2024",   title: "EcoLeaf", role: "Tech Lead & Backend", description: "Platform for a gardening company with an AI-powered form that recommends the right plant for the user.", techs: ["Node.js", "React.js", "MongoDB", "Gemini API"], github: "https://github.com/vbzt/EcoLeaf" },
-    }
+    },
+
+    footer: { text: "Made with 🖤 by"}
   },
 
   pt: {
@@ -46,8 +48,10 @@ export const t = {
     projectsPage: {
       nomuz:   { category: "TCC · 2025",      title: "Nomuz",   role: "Tech Lead & Backend", description: "Plataforma que centraliza a gestão de processos e a comunicação entre advogados, clientes e associados em um ambiente seguro e projetado para a confidencialidade jurídica.", techs: ["NestJS", "Next.js", "PostgreSQL", "WebSockets", "E2E Encryption"], github: "https://github.com/vbzt/Nomuz" },
       crumbly: { category: "Pessoal · 2024", title: "Crumbly", role: "Solo",                description: "API backend para gestão de padarias. Autenticação, controle de estoque, vendas e rastreamento de pedidos.", techs: ["NestJS", "PrismaORM", "MySQL", "TypeScript"], github: "https://github.com/vbzt/Crumbly" },
-      any2any: { category: "Pessoal · 2024", title: "Any2Any", role: "Solo",                description: "Ferramenta client-side para conversão ilimitada de arquivos multimídia. Todo o processamento é feito localmente. Sem uploads, sem limites.", techs: ["Vite", "TypeScript"], github: "https://github.com/vbzt/Any2Any", deploy: "https://anytoany.vercel.app/" },
+      any2any: { category: "Pessoal · 2024", title: "Any2Any", role: "Solo",                description: "Ferramenta client-side para conversão ilimitada de arquivos multimídia. Todo o processamento é feito localmente. Sem uploads, sem limites.", techs: ["Vite", "TypeScript", "FFMPEG"], github: "https://github.com/vbzt/Any2Any", deploy: "https://anytoany.vercel.app/" },
       ecoleaf: { category: "Escola · 2024",  title: "EcoLeaf", role: "Tech Lead & Backend", description: "Plataforma para uma empresa de jardinagem com formulário inteligente que usa IA para recomendar a planta ideal para o usuário.", techs: ["Node.js", "React.js", "MongoDB", "Gemini API"], github: "https://github.com/vbzt/EcoLeaf" },
-    }
+    },
+
+    footer: { text: "Feito com 🖤 por"}
   }
 }

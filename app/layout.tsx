@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import { cookies } from "next/headers";
 import { LanguageProvider } from "@/context/LanguageContext";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const workSans = Work_Sans({
   variable: "--font-work-sans",
@@ -54,6 +55,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <LanguageProvider defaultLang={lang}>
           <Header />
           {children}
+          <Footer/>
         </LanguageProvider>
       </body>
     </html>
