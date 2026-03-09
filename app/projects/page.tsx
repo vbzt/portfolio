@@ -12,7 +12,6 @@ const Projects = () => {
   return (
     <div className="min-h-screen flex items-center justify-center px-3 py-8">
       <div ref={ref} className="grid gap-2.5 max-w-[1200px] w-full">
-        {/* Nomuz - Projeto principal */}
         <div
           style={{ 
             opacity: isVisible ? 1 : 0,
@@ -23,7 +22,6 @@ const Projects = () => {
           <Card variant="project" {...text.nomuz} />
         </div>
 
-        {/* Crumbly e Any2Any */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 items-stretch">
           <div
             style={{ 
@@ -45,7 +43,6 @@ const Projects = () => {
           </div>
         </div>
 
-        {/* EcoLeaf */}
         <div
           style={{ 
             opacity: isVisible ? 1 : 0,

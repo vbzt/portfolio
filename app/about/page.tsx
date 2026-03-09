@@ -12,7 +12,6 @@ const About = () => {
   return (
     <div className="min-h-screen flex items-center justify-center px-3 py-8">
       <div ref={ref} className="grid gap-2.5 max-w-[1200px] w-full">
-        {/* Intro */}
         <div
           style={{ 
             opacity: isVisible ? 1 : 0,
@@ -28,7 +27,6 @@ const About = () => {
           />
         </div>
 
-        {/* Start + Passion/NestJS */}
         <div className="grid grid-cols-2 gap-2.5 items-stretch">
           <div
             style={{ 
@@ -77,7 +75,6 @@ const About = () => {
           </div>
         </div>
 
-        {/* Web + Education */}
         <div className="grid grid-cols-2 gap-2.5">
           <div
             style={{ 

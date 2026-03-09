@@ -19,7 +19,6 @@ const Portfolio = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-3">
       <div ref={ref} className="grid gap-2.5 max-w-[1200px] w-full">
-        {/* Card 1 - Main */}
         <div 
           className="animate-fadeInUp"
           style={{ 
@@ -37,7 +36,6 @@ const Portfolio = () => {
           />
         </div>
 
-        {/* Card 2 e 3 - Grid superior */}
         <div className="grid grid-cols-2 gap-2.5 items-stretch">
           <div className="flex flex-col gap-2.5">
             <div
@@ -93,7 +91,6 @@ const Portfolio = () => {
           </div>
         </div>
 
-        {/* Card 4 - Contato */}
         <div
           style={{ 
             opacity: isVisible ? 1 : 0,
