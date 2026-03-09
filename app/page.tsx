@@ -4,11 +4,13 @@ import Card from "@/components/Card";
 import toast, { Toaster } from "react-hot-toast";
 import { useLang } from "@/context/LanguageContext";
 import { t } from "@/lib/i18n";
+import { useStaggerAnimation } from "@/hooks/useStaggerAnimation";
 
 const Portfolio = () => {
   const { lang } = useLang();
   const text = t[lang];
-
+  const { ref, isVisible, staggerDelay } = useStaggerAnimation();
+  
   const handleEmailCopy = async () => {
     await navigator.clipboard.writeText('vitorcastrobuzato@gmail.com')
     toast.success(text.emailCopied, { duration: 1800 })
@@ -16,53 +18,98 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-3">
-      <div className="grid gap-2.5 max-w-[950px] w-full">
-        <Card
-          variant="main"
-          name="Vitor de C. Buzato"
-          description={text.description}
-          github="https://github.com/vbzt"
-          linkedin="https://linkedin.com/in/vitor-buzato"
-        />
-        <div className="grid grid-cols-2 gap-2.5 items-stretch">
-          <div className="flex flex-col gap-2.5">
-            <Card
-              variant="nav"
-              icon={<FiUser/>}
-              category={text.about.category}
-              title={text.about.title}
-              description={text.about.description}
-              href="/about"
-            />
-            <Card
-              variant="nav"
-              icon={<FiFileText />}
-              category={text.resume.category}
-              title={text.resume.title}
-              description={text.resume.description}
-              href={text.resume.url}
-              target="_blank"
-
-            />
-          </div>
+      <div ref={ref} className="grid gap-2.5 max-w-[1200px] w-full">
+        {/* Card 1 - Main */}
+        <div 
+          className="animate-fadeInUp"
+          style={{ 
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+            transition: `opacity 400ms ease-out ${staggerDelay * 0}ms, transform 400ms ease-out ${staggerDelay * 0}ms`
+          }}
+        >
           <Card
-            variant="nav"
-            icon={<FiCode />}
-            category={text.projects.category}
-            title={text.projects.title}
-            description={text.projects.description}
-            href="/projects"
-            className="h-full"
+            variant="main"
+            name="Vitor de C. Buzato"
+            description={text.description}
+            github="https://github.com/vbzt"
+            linkedin="https://linkedin.com/in/vitor-buzato"
           />
         </div>
-        <Card
-          variant="nav"
-          icon={<FiMail />}
-          category={text.contact.category}
-          title={text.contact.title}
-          description={text.contact.description}
-          onClick={handleEmailCopy}
-        />
+
+        {/* Card 2 e 3 - Grid superior */}
+        <div className="grid grid-cols-2 gap-2.5 items-stretch">
+          <div className="flex flex-col gap-2.5">
+            <div
+              style={{ 
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+                transition: `opacity 400ms ease-out ${staggerDelay * 1}ms, transform 400ms ease-out ${staggerDelay * 1}ms`
+              }}
+            >
+              <Card
+                variant="nav"
+                icon={<FiUser/>}
+                category={text.about.category}
+                title={text.about.title}
+                description={text.about.description}
+                href="/about"
+              />
+            </div>
+            <div
+              style={{ 
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+                transition: `opacity 400ms ease-out ${staggerDelay * 2}ms, transform 400ms ease-out ${staggerDelay * 2}ms`
+              }}
+            >
+              <Card
+                variant="nav"
+                icon={<FiFileText />}
+                category={text.resume.category}
+                title={text.resume.title}
+                description={text.resume.description}
+                href={text.resume.url}
+                target="_blank"
+              />
+            </div>
+          </div>
+          <div
+            style={{ 
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+              transition: `opacity 400ms ease-out ${staggerDelay * 3}ms, transform 400ms ease-out ${staggerDelay * 3}ms`
+            }}
+          >
+            <Card
+              variant="nav"
+              icon={<FiCode />}
+              category={text.projects.category}
+              title={text.projects.title}
+              description={text.projects.description}
+              href="/projects"
+              className="h-full"
+            />
+          </div>
+        </div>
+
+        {/* Card 4 - Contato */}
+        <div
+          style={{ 
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+            transition: `opacity 400ms ease-out ${staggerDelay * 4}ms, transform 400ms ease-out ${staggerDelay * 4}ms`
+          }}
+        >
+          <Card
+            variant="nav"
+            icon={<FiMail />}
+            category={text.contact.category}
+            title={text.contact.title}
+            description={text.contact.description}
+            onClick={handleEmailCopy}
+          />
+        </div>
       </div>
     </div>
   )

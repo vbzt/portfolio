@@ -88,9 +88,13 @@ const MainCard: React.FC<MainCardProps> = ({ name, description, github, linkedin
 )
 
 const NavCard: React.FC<NavCardProps> = ({ icon, category, title, description, target, href = '#' }) => (
-  <a href={href} target={target} className="flex flex-col gap-1 bg-[#1a1a1a] border border-[#2e2e2e] rounded-2xl p-6 w-full h-full no-underline cursor-pointer hover:bg-[#1f1f1f] hover:border-[#444444] transition-colors duration-200">
+  <a 
+    href={href} 
+    target={target} 
+    className="group flex flex-col gap-1 bg-[#1a1a1a] border border-[#2e2e2e] rounded-2xl p-6 w-full h-full no-underline cursor-pointer hover:bg-gradient-to-br hover:from-[#212121] hover:via-[#1c1c1c] hover:to-[#1a1a1a] hover:border-[#3a3a3a] hover:-translate-y-1 hover:shadow-lg transition-all duration-200 ease-out"
+  >
     {icon && (
-      <span className="text-[#888888] text-xl leading-none mb-1 flex items-center">
+      <span className="text-[#888888] text-xl leading-none mb-1 flex items-center group-hover:text-[#aaaaaa] transition-colors duration-200">
         {icon}
       </span>
     )}
@@ -108,26 +112,59 @@ const NavCard: React.FC<NavCardProps> = ({ icon, category, title, description, t
   </a>
 )
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ category, title, description, role, github, deploy, techs }) => (
-  <div className="flex flex-col gap-1 bg-[#1a1a1a] border border-[#2e2e2e] rounded-2xl p-6 w-full h-full hover:bg-[#1f1f1f] hover:border-[#444444] transition-colors duration-200">
-    {category && <span className="text-xs text-[#6b6b6b]">{category}</span>}
+const ProjectCard: React.FC<ProjectCardProps> = ({ category, title, description, role, github, deploy, techs }) => {
+  const mainLink = deploy || github
+  
+  return (
+    <a 
+      href={mainLink} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="group flex flex-col gap-1 bg-[#1a1a1a] border border-[#2e2e2e] rounded-2xl p-6 w-full h-full no-underline hover:bg-gradient-to-br hover:from-[#212121] hover:via-[#1c1c1c] hover:to-[#1a1a1a] hover:border-[#3a3a3a] hover:-translate-y-1 hover:shadow-lg transition-all duration-200 ease-out cursor-pointer"
+    >
+      {category && <span className="text-xs text-[#6b6b6b]">{category}</span>}
 
-    <div className="flex items-center gap-2">
-      {title && <h3 className="text-xl font-semibold text-[#f0f0f0] m-0 leading-tight">{title}</h3>}
-      {(github || deploy) && <span className="text-[#2e2e2e]">•</span>}
-      {github && <a href={github} target="_blank" rel="noopener noreferrer" className="text-xs text-[#6b6b6b] hover:text-white transition-colors duration-200">GitHub</a>}
-      {deploy && <a href={deploy} target="_blank" rel="noopener noreferrer" className="text-xs text-[#6b6b6b] hover:text-white transition-colors duration-200">Live</a>}
-    </div>
-
-    {role && <span className="text-xs text-[#555555] mb-1">{role}</span>}
-    {description && <p className="text-[0.8rem] text-[#9a9a9a] m-0 leading-relaxed flex-1">{description}</p>}
-    {techs && (
-      <div className="flex flex-wrap gap-1.5 mt-2">
-        {techs.map(t => <Technologies key={t} name={t} />)}
+      <div className="flex items-center gap-2">
+        {title && <h3 className="text-xl font-semibold text-[#f0f0f0] m-0 leading-tight">{title}</h3>}
+        {(github || deploy) && <span className="text-[#2e2e2e]">•</span>}
+        {github && (
+          <span 
+            onClick={(e) => {
+              if (mainLink !== github) {
+                e.preventDefault()
+                window.open(github, '_blank')
+              }
+            }}
+            className="text-xs text-[#6b6b6b] hover:text-white transition-colors duration-200 cursor-pointer"
+          >
+            GitHub
+          </span>
+        )}
+        {deploy && (
+          <span 
+            onClick={(e) => {
+              if (mainLink !== deploy) {
+                e.preventDefault()
+                window.open(deploy, '_blank')
+              }
+            }}
+            className="text-xs text-[#6b6b6b] hover:text-white transition-colors duration-200 cursor-pointer"
+          >
+            Live
+          </span>
+        )}
       </div>
-    )}
-  </div>
-)
+
+      {role && <span className="text-xs text-[#555555] mb-1">{role}</span>}
+      {description && <p className="text-[0.8rem] text-[#9a9a9a] m-0 leading-relaxed flex-1">{description}</p>}
+      {techs && (
+        <div className="flex flex-wrap gap-1.5 mt-2">
+          {techs.map(t => <Technologies key={t} name={t} />)}
+        </div>
+      )}
+    </a>
+  )
+}
 
 const Card: React.FC<CardProps> = ({ variant = 'nav', className = '', onClick, ...props }) => {
   const Comp = variant === 'main' ? MainCard : variant === 'project' ? ProjectCard : NavCard
