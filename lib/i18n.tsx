@@ -34,7 +34,7 @@ export const t = {
     back: "Voltar",
 
     about:    { category: "Sobre",     title: "Saiba mais",       description: "Conheça minha trajetória." },
-    resume:   { category: "Currículo", title: "Meu currículo",    description: "Veja meu CV completo.", url: "https://docs.google.com/document/d/1UH2OT_F1BBe5n5wlnRhfdjF1SezjTyoBz7Qm-rCtmx4/edit?tab=t.0" },
+    resume:   { category: "Currículo", title: "Meu currículo",    description: "Veja meu CV completo.", url: "https://docs.google.com/document/d/1skZO-4znNMhwS9pPmsG3-fZTaKH13klBmdR_YGH4aoA/edit?usp=sharing" },
     projects: { category: "Projetos",  title: "Meus trabalhos",   description: "Conheça meus principais projetos pessoais." },
     contact:  { category: "Contato",   title: "Entre em contato", description: "Gostou do que viu? Me mande um email." },
 
