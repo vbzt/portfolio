@@ -8,13 +8,14 @@ export function HomeHero({ locale }: { locale: Locale }) {
 
   return (
     <section
-      className="grid min-h-[calc(100svh-var(--site-header-height))] grid-rows-[minmax(32px,0.85fr)_auto_minmax(48px,1.15fr)] max-[540px]:grid-rows-[minmax(24px,0.85fr)_auto_minmax(32px,1.15fr)]"
+      data-motion-item
+      className="motion-item grid min-h-[calc(100svh-var(--site-header-height))] grid-rows-[minmax(32px,0.85fr)_auto_minmax(48px,1.15fr)] max-[540px]:grid-rows-[minmax(24px,0.85fr)_auto_minmax(32px,1.15fr)]"
       aria-labelledby="hero-title"
     >
       <div className="row-start-2 min-w-0">
         <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,0.72fr)] items-center gap-[clamp(32px,5vw,80px)] max-[900px]:grid-cols-1 max-[900px]:gap-8">
           <div className="min-w-0">
-            <h1 className="mb-4 max-w-[900px] text-[clamp(36px,4.2vw,56px)] leading-[1.1] font-[650] tracking-[-0.055em] max-[760px]:text-[clamp(35px,6vw,46px)] max-[540px]:mb-3 max-[540px]:text-[clamp(32px,9.5vw,43px)]" id="hero-title">{site.name}</h1>
+            <h1 className="mb-5 max-w-[900px] text-[clamp(34px,3.8vw,48px)] leading-[1.18] font-medium tracking-[-0.02em] max-[760px]:text-[clamp(33px,5.8vw,44px)] max-[540px]:mb-4 max-[540px]:text-[clamp(31px,8.8vw,40px)]" id="hero-title">{site.name}</h1>
             <p className="m-0 text-[clamp(15px,1.3vw,17px)] leading-[1.55] text-copy-secondary [&_span]:block max-[540px]:text-[15px]">
               {t.lead.map((line) => <span key={line}>{line}</span>)}
             </p>
@@ -35,7 +36,7 @@ export function HomeHero({ locale }: { locale: Locale }) {
             />
           </figure>
         </div>
-        <div className={`${links} mt-10 justify-between gap-y-3 border-t border-line-soft pt-5 text-[13px] font-semibold lowercase text-copy-secondary max-[540px]:mt-7`}>
+        <div className={`${links} mt-12 justify-between gap-y-3 border-t border-line-soft pt-7 text-[13px] font-semibold lowercase text-copy-secondary max-[540px]:mt-9`}>
           <div className={`${links} [&_a:first-child]:text-foreground`}>
             <a href="#projects">{t.projects} <ArrowUpRight /></a>
             <a href="#contact">{t.contact}</a>

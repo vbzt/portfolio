@@ -5,9 +5,9 @@ import { HomeHero } from "./HomeHero";
 import { copy, selectedProjects, site } from "@/lib/portfolio";
 import { useLanguage } from "./LanguageProvider";
 
-const sectionClass = "scroll-mt-[100px] pt-[142px] max-[760px]:scroll-mt-[125px] max-[760px]:pt-24";
-const shortSectionClass = "scroll-mt-[100px] pt-28 max-[760px]:scroll-mt-[125px] max-[540px]:pt-[78px]";
-const projectsSectionClass = "scroll-mt-[100px] pt-12 max-[760px]:scroll-mt-[125px] max-[540px]:pt-8";
+const sectionClass = "scroll-mt-[100px] pt-[168px] max-[760px]:scroll-mt-[125px] max-[760px]:pt-[120px]";
+const shortSectionClass = "scroll-mt-[100px] pt-36 max-[760px]:scroll-mt-[125px] max-[540px]:pt-28";
+const projectsSectionClass = "scroll-mt-[100px] pt-20 max-[760px]:scroll-mt-[125px] max-[540px]:pt-14";
 
 export function HomeContent() {
   const { locale: lang } = useLanguage();
@@ -28,39 +28,40 @@ export function HomeContent() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }} />
       <HomeHero locale={lang} />
 
-      <section className={projectsSectionClass} id="projects" aria-labelledby="projects-title">
-        <SectionHeading id="projects-title" index={t.sections.projects.number} title={t.sections.projects.title} intro={t.sections.projects.intro} action={t.sections.projects.all} href="/projects" />
+      <section className={`home-section ${projectsSectionClass}`} id="projects" aria-labelledby="projects-title">
+        <SectionHeading id="projects-title" title={t.sections.projects.title} intro={t.sections.projects.intro} action={t.sections.projects.all} href="/projects" />
         <div className="border-t border-line">
           {selectedProjects.map((project) => <HomeProjectRow key={project.slug} project={project} locale={lang} />)}
         </div>
       </section>
 
-      <section className={shortSectionClass} id="capabilities" aria-labelledby="capabilities-title">
-        <SectionHeading id="capabilities-title" index={t.sections.capabilities.number} title={t.sections.capabilities.title} intro={t.sections.capabilities.intro} />
+      <section className={`home-section ${shortSectionClass}`} id="capabilities" aria-labelledby="capabilities-title">
+        <SectionHeading id="capabilities-title" title={t.sections.capabilities.title} intro={t.sections.capabilities.intro} />
         <div className="border-t border-line">
           {t.capabilities.map((capability) => (
-            <article className="editorial-row border-b border-line py-[30px] max-[540px]:py-6" key={capability.number}>
-              <div className="flex items-start gap-5 max-[540px]:gap-3">
-                <span className="pt-[6px] font-[Consolas,monospace] text-xs text-accent">{capability.number}</span>
-                <h3 className="m-0 min-w-0 text-[clamp(24px,2.5vw,33px)] leading-[1.16] tracking-[-0.055em]">{capability.title}</h3>
+            <article data-motion-item className="editorial-row motion-item border-b border-line py-12 max-[540px]:py-9" key={capability.title}>
+              <div className="flex items-start">
+                <h3 className="home-item-title min-w-0">{capability.title}</h3>
               </div>
               <div className="min-w-0">
                 <p className="description">{capability.text}</p>
-                <div className="mt-[14px] flex flex-wrap gap-[7px]">{capability.tech.map((tech) => <TechBadge name={tech} key={tech} />)}</div>
+                <ul className="home-tech-badges" aria-label={lang === "pt" ? "Tecnologias" : "Technologies"}>
+                  {capability.tech.map((tech) => <li key={tech}><TechBadge name={tech} /></li>)}
+                </ul>
               </div>
             </article>
           ))}
         </div>
       </section>
 
-      <section className={sectionClass} id="about" aria-labelledby="about-title">
-        <SectionHeading id="about-title" index={t.sections.about.number} title={t.sections.about.title} />
+      <section className={`home-section ${sectionClass}`} id="about" aria-labelledby="about-title">
+        <SectionHeading id="about-title" title={t.sections.about.title} />
         <div className="border-t border-line">
-          {t.journey.map((item, index) => (
-            <article className="editorial-row border-b border-line pt-[42px] pb-12 max-[540px]:pt-[30px] max-[540px]:pb-[34px]" key={item.label}>
+          {t.journey.map((item) => (
+            <article data-motion-item className="editorial-row motion-item border-b border-line pt-14 pb-16 max-[540px]:pt-10 max-[540px]:pb-12" key={item.label}>
               <div>
-                <span className="font-[Consolas,monospace] text-xs text-accent">0{index + 1} {item.label}</span>
-                <h3 className="mt-[17px] max-w-[480px] text-[clamp(27px,2.7vw,36px)] leading-[1.14] font-semibold tracking-[-0.05em] max-[540px]:mt-3">{item.title}</h3>
+                <span className="text-xs font-medium text-copy-muted">{item.label}</span>
+                <h3 className="home-item-title mt-4 max-w-[480px] max-[540px]:mt-3">{item.title}</h3>
               </div>
               <p className="description">{item.text}</p>
             </article>
@@ -68,8 +69,8 @@ export function HomeContent() {
         </div>
       </section>
 
-      <section className={`${sectionClass} pb-[118px]`} id="contact" aria-labelledby="contact-title">
-        <SectionHeading id="contact-title" index={t.sections.contact.number} title={t.sections.contact.title} intro={t.sections.contact.intro} />
+      <section className={`home-section ${sectionClass} pb-[118px]`} id="contact" aria-labelledby="contact-title">
+        <SectionHeading id="contact-title" title={t.sections.contact.title} intro={t.sections.contact.intro} />
         <ContactPanel locale={lang} />
       </section>
     </main>

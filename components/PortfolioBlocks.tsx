@@ -1,17 +1,18 @@
 import Link from "next/link";
+import Image from "next/image";
 import { EmailCopy } from "./EmailCopy";
 import { copy, site, type Locale, type Project } from "@/lib/portfolio";
-import { ArrowDown, ArrowRight, ArrowUpRight, SignalMark } from "./Icons";
+import { ArrowDown, ArrowRight, ArrowUpRight } from "./Icons";
 
-export function SectionHeading({ id, index, title, intro, action, href }: { id: string; index: string; title: string; intro?: string; action?: string; href?: string }) {
+
+export function SectionHeading({ id, title, intro, action, href }: { id: string; title: string; intro?: string; action?: string; href?: string }) {
   return (
-    <div className="mb-[30px] flex items-end justify-between gap-9 max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-3">
+    <div className="mb-10 flex items-end justify-between gap-9 max-[540px]:mb-8 max-[540px]:flex-col max-[540px]:items-start max-[540px]:gap-3">
       <div>
-        <p className="m-0 inline-flex items-center gap-[10px] text-[11px] font-bold tracking-[0.14em] text-copy-muted"><span className="inline-block h-[2px] w-5 shrink-0 bg-accent" />{index}</p>
-        <h2 className="mt-[17px] mb-2 text-[clamp(34px,3.65vw,52px)] leading-[1.12] font-[650] tracking-[-0.065em] max-[540px]:text-[38px]" id={id}>{title}</h2>
+        <h2 className="home-section-title mb-[14px]" id={id}>{title}</h2>
         {intro && <p className="description">{intro}</p>}
       </div>
-      {action && href && <Link className="inline-flex min-h-11 shrink-0 items-center gap-[6px] border-b border-accent text-[13px] font-[650] text-foreground hover:text-accent-hover" href={href}>{action}<ArrowUpRight /></Link>}
+      {action && href && <Link className="inline-flex min-h-11 shrink-0 items-center gap-[6px] border-b border-accent text-[13px] font-[650] text-foreground hover:text-accent-hover" href={href}>{action}<ArrowRight /></Link>}
     </div>
   );
 }
@@ -24,18 +25,15 @@ export function HomeProjectRow({ project, locale }: { project: Project; locale: 
   const t = copy[locale].contact;
 
   return (
-    <article className="editorial-row border-b border-line py-[25px] max-[540px]:py-6" id={`project-${project.slug}`}>
+    <article className="editorial-row motion-item border-b border-line py-12 max-[540px]:py-10" data-motion-item id={"project-" + project.slug}>
       <div>
-        <span className="text-[11px] font-bold tracking-[0.07em] text-copy-muted">{project.category[locale]}</span>
-        <h3 className="mt-[10px] text-[clamp(26px,2.7vw,37px)] leading-[1.1] font-[650] tracking-[-0.055em]">{project.name}</h3>
+        <span className="home-project-category text-[11px] font-bold tracking-[0.07em] text-copy-muted">{project.category[locale]}</span>
+        <h3 className="home-item-title mt-4">{project.name}</h3>
       </div>
       <div className="flex flex-col items-start">
-        {project.role && <p className="mb-[9px] text-xs font-[650] text-accent-hover">{project.role[locale]}</p>}
+        {project.role && <p className="home-project-role mb-[9px] text-xs font-[650] text-accent-hover">{project.role[locale]}</p>}
         <p className="description">{project.description[locale]}</p>
-        <div className="flex flex-wrap gap-x-6 gap-y-[10px] pt-[10px] [&_a]:inline-flex [&_a]:min-h-10 [&_a]:items-center [&_a]:gap-[6px] [&_a]:border-b [&_a]:border-accent-border [&_a]:text-xs [&_a]:font-[650] [&_a:hover]:text-accent-hover [&_svg]:size-[15px]">
-          <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`${project.name}: ${t.repo}`}>{t.repo} <ArrowUpRight /></a>
-          {project.deploy && <a href={project.deploy} target="_blank" rel="noopener noreferrer" aria-label={`${project.name}: ${t.live}`}>{t.live} <ArrowUpRight /></a>}
-        </div>
+        <Link className="home-project-details-link mt-[10px] min-h-10 items-center gap-[6px] border-b border-accent text-xs font-semibold text-foreground hover:text-accent-hover" href={"/projects#project-" + project.slug} aria-label={project.name + ": " + t.details}>{t.details} <ArrowRight /></Link>
       </div>
     </article>
   );
@@ -47,43 +45,76 @@ function ProjectVisual({ project, locale }: { project: Project; locale: Locale }
   if (!project.visual) return null;
 
   if (project.visual === "tracksafe") {
+    const steps = isPt
+      ? [
+          { title: "Disponibilidade", detail: "horários e planos" },
+          { title: "Reserva", detail: "bateria de drift" },
+          { title: "Pagamento", detail: "Pix via AbacatePay" },
+        ]
+      : [
+          { title: "Availability", detail: "schedules and plans" },
+          { title: "Booking", detail: "drift kart session" },
+          { title: "Payment", detail: "Pix via AbacatePay" },
+        ];
     return (
-      <figure className={`${visualClass} tracksafe-visual`} aria-label={isPt ? "Fluxo de dados críticos da API TrackSafe" : "TrackSafe API critical data flow"}>
-        <div className="visual-topline"><span>TrackSafe / API</span><span>01–03</span></div>
-        <div className="tracksafe-map">
-          <div className="tracksafe-map__system"><span>Supabase Auth</span><strong>TrackSafe API</strong><span>AbacatePay</span></div>
-          <div className="tracksafe-map__modules">
-            <div><span className="visual-number">01</span><strong>{isPt ? "autorização" : "authorization"}</strong><small>{isPt ? "controle de acesso" : "access control"}</small></div>
-            <div><span className="visual-number">02</span><strong>{isPt ? "agendamento" : "booking"}</strong><small>{isPt ? "dados no backend" : "server-side data"}</small></div>
-            <div><span className="visual-number">03</span><strong>{isPt ? "pagamento" : "payment"}</strong><small>{isPt ? "preços e cupons" : "prices and coupons"}</small></div>
-          </div>
-        </div>
-        <figcaption>{isPt ? "Preços, cupons e pagamentos controlados pelo backend" : "Prices, coupons, and payments controlled by the backend"}</figcaption>
+      <figure className={`${visualClass} project-visual--tracksafe`} aria-labelledby="tracksafe-visual-caption">
+        <ol className="project-flow">
+          {steps.map((step, index) => (
+            <li key={step.title}>
+              <div><strong>{step.title}</strong><small>{step.detail}</small></div>
+              {index < steps.length - 1 && <span className="project-flow__arrow" aria-hidden="true">→</span>}
+            </li>
+          ))}
+        </ol>
+        <figcaption id="tracksafe-visual-caption">
+          {isPt
+            ? "Fluxo conceitual da API: consultar horários, reservar uma bateria e seguir ao pagamento."
+            : "Conceptual API flow: check schedules, book a session, then continue to payment."}
+        </figcaption>
       </figure>
     );
   }
 
   if (project.visual === "nomuz") {
     return (
-      <figure className={visualClass} aria-label={isPt ? "Estrutura documentada do Nomuz" : "Documented Nomuz structure"}>
-        <div className="visual-topline"><span>nomuz / {isPt ? "estrutura" : "structure"}</span><span>02</span></div>
-        <div className="visual-stack">
-          <div className="visual-stack__row"><span>frontend/</span><strong>Next.js</strong></div>
-          <div className="visual-stack__row visual-stack__row--active"><span>api/</span><strong>NestJS · WebSockets</strong></div>
-          <div className="visual-stack__row"><span>data/</span><strong>Prisma · PostgreSQL</strong></div>
+      <figure className={`${visualClass} project-visual--nomuz`} aria-labelledby="nomuz-visual-caption">
+        <div className="nomuz-map">
+          <div className="nomuz-map__people">
+            <span>{isPt ? "advogados" : "lawyers"}</span>
+            <span>{isPt ? "clientes" : "clients"}</span>
+            <span>{isPt ? "associados" : "associates"}</span>
+          </div>
+          <span className="nomuz-map__connector" aria-hidden="true">↓</span>
+          <strong className="nomuz-map__case">{isPt ? "caso jurídico" : "legal case"}</strong>
+          <div className="nomuz-map__outcomes">
+            <span>{isPt ? "gestão do caso" : "case management"}</span>
+            <span>{isPt ? "conversa em tempo real" : "real-time conversation"}</span>
+          </div>
         </div>
-        <figcaption>{isPt ? "Estrutura simplificada a partir do README" : "Simplified structure based on the README"}</figcaption>
+        <figcaption id="nomuz-visual-caption">
+          {isPt
+            ? "Modelo conceitual das pessoas e atividades ligadas a um caso; não representa uma tela do produto."
+            : "Conceptual map of the people and activities around a case; this is not a product screenshot."}
+        </figcaption>
       </figure>
     );
   }
 
   return (
-    <figure className={visualClass} aria-label={isPt ? "Fluxo documentado de análise de imagens do DeepY" : "Documented DeepY image analysis flow"}>
-      <div className="visual-topline"><span>DeepY / {isPt ? "análise de imagem" : "image analysis"}</span><span>03</span></div>
-      <div className="visual-deepy-flow">
-        <span>{isPt ? "imagem" : "image"}</span><ArrowRight /><span>FastAPI + Gemini</span><ArrowRight /><span>{isPt ? "conteúdo de estudo" : "study material"}</span>
-      </div>
-      <figcaption>{isPt ? "Análises de imagem; organização por horário ocorre no navegador" : "Image analysis; schedule matching runs in the browser"}</figcaption>
+    <figure className={`${visualClass} project-visual--deepy`} aria-labelledby="deepy-visual-caption">
+      <Image
+        src="/projects/deepy-summary.png"
+        alt={isPt
+          ? "Tela escura com o resumo de um sistema de equações lineares e botão para salvar no Caderno Inteligente."
+          : "Dark screen with a summary of a system of linear equations and a button to save it to the Smart Notebook."}
+        width={526}
+        height={940}
+        sizes="(max-width: 900px) 80vw, 34vw"
+        className="project-visual__image"
+      />
+      <figcaption id="deepy-visual-caption">
+        {isPt ? "Captura real da tela de resumo apresentada na página do DeepY." : "Real capture of the summary screen shown on the DeepY page."}
+      </figcaption>
     </figure>
   );
 }
@@ -93,9 +124,9 @@ export function ProjectCard({ project, locale, variant }: { project: Project; lo
   const featured = variant === "featured";
   const linksClass = "flex flex-wrap gap-[18px] [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center [&_a]:gap-2 [&_a]:border-b [&_a]:border-accent [&_a]:text-[13px] [&_a]:font-bold [&_a]:text-foreground [&_a:hover]:text-accent-hover";
   return (
-    <article className={featured ? "grid min-w-0 scroll-mt-24 grid-cols-[minmax(0,1fr)_minmax(330px,0.86fr)] items-center gap-[clamp(24px,4vw,64px)] border-b border-line max-[900px]:grid-cols-1 max-[900px]:gap-0" : "block min-w-0 scroll-mt-24 border-b border-line"} id={`project-${project.slug}`}>
+    <article data-motion-item className={`${featured ? "grid min-w-0 scroll-mt-24 grid-cols-[minmax(0,1fr)_minmax(330px,0.86fr)] items-center gap-[clamp(24px,4vw,64px)] border-b border-line max-[900px]:grid-cols-1 max-[900px]:gap-0" : "block min-w-0 scroll-mt-24 border-b border-line"} motion-item`} id={`project-${project.slug}`}>
       <div className={featured ? "flex min-w-0 flex-col py-[42px] max-[900px]:pb-0" : "grid min-w-0 grid-cols-[minmax(170px,0.55fr)_minmax(0,1fr)] gap-x-[42px] gap-y-3 py-7 max-[540px]:grid-cols-1"}>
-        <div className="col-span-full flex items-start justify-between gap-3"><span className="text-[11px] font-bold tracking-[0.09em] text-copy-muted">{project.category[locale]}</span><span className="font-[Consolas,monospace] text-[11px] tracking-[0.08em] text-copy-muted">/{project.slug}</span></div>
+        <div className="col-span-full"><span className="project-category text-[11px] font-bold tracking-[0.09em] text-copy-muted">{project.category[locale]}</span></div>
         <h3 className={featured ? "mt-5 mb-[7px] text-[clamp(28px,2.7vw,38px)] leading-[1.1] font-[650] tracking-[-0.065em] max-[540px]:text-4xl" : "m-0 text-[clamp(28px,2.7vw,38px)] leading-[1.1] font-[650] tracking-[-0.065em] max-[540px]:text-4xl"}>{project.name}</h3>
         {project.role && <p className={featured ? "mb-5 text-[13px] font-bold text-accent" : "col-start-1 m-0 text-[13px] font-bold text-accent"}>{project.role[locale]}</p>}
         <p className={featured ? "description" : "description col-start-2 max-[540px]:col-start-1"}>{project.description[locale]}</p>
@@ -116,11 +147,10 @@ export function ProjectCard({ project, locale, variant }: { project: Project; lo
 export function ContactPanel({ locale }: { locale: Locale }) {
   const t = copy[locale];
   return (
-    <div className="grid grid-cols-[1fr_230px] overflow-hidden rounded-[24px] border border-line bg-surface-elevated max-[760px]:grid-cols-1">
+    <div data-motion-item className="contact-panel motion-item grid grid-cols-[1fr_230px] overflow-hidden rounded-[24px] border border-line bg-surface-elevated max-[760px]:grid-cols-1">
       <div className="relative min-w-0 p-[clamp(28px,4vw,52px)] max-[540px]:p-[26px]">
-        <span className="text-[34px] leading-none text-accent"><SignalMark /></span>
-        <div className="mt-[55px] mb-3 max-[760px]:mt-[35px]"><p className="description">{t.contact.message}</p></div>
-        <a className="inline-block max-w-full border-b-2 border-accent pb-2 text-[clamp(23px,3.4vw,47px)] font-semibold tracking-[-0.055em] [overflow-wrap:anywhere] hover:text-accent-hover max-[540px]:text-[clamp(19px,5.8vw,29px)]" href={`mailto:${site.email}`}>{site.email}</a>
+        <div className="mb-4"><p className="description">{t.contact.message}</p></div>
+        <a className="inline-block max-w-full border-b-2 border-accent pb-2 text-[clamp(22px,3.2vw,42px)] font-medium tracking-[-0.035em] [overflow-wrap:anywhere] hover:text-accent-hover max-[540px]:text-[clamp(19px,5.8vw,29px)]" href={`mailto:${site.email}`}>{site.email}</a>
         <EmailCopy locale={locale} />
       </div>
       <div className="flex flex-col justify-end border-l border-line p-6 [&_a]:flex [&_a]:min-h-[54px] [&_a]:items-center [&_a]:justify-between [&_a]:gap-3 [&_a]:border-b [&_a]:border-line [&_a]:text-sm [&_a]:font-semibold [&_a:last-child]:border-0 [&_a:hover]:text-accent-hover max-[760px]:border-t max-[760px]:border-l-0">
@@ -135,7 +165,7 @@ export function ContactPanel({ locale }: { locale: Locale }) {
 export function SiteFooter({ locale }: { locale: Locale }) {
   const t = copy[locale];
   return (
-    <footer className="shell flex min-h-[94px] flex-wrap items-center justify-between gap-[15px] border-t border-line-soft text-xs text-copy-muted max-[540px]:py-[26px]">
+    <footer data-motion-item className="motion-item shell flex min-h-[94px] flex-wrap items-center justify-between gap-[15px] border-t border-line-soft text-xs text-copy-muted max-[540px]:py-[26px]">
       <p className="m-0">{t.footer}</p>
       <nav className="flex gap-[22px] [&_a]:inline-flex [&_a]:min-h-11 [&_a]:items-center [&_a:hover]:text-foreground" aria-label={locale === "pt" ? "Links do rodapé" : "Footer links"}>
         <Link href="/">{t.nav.home}</Link>

@@ -16,7 +16,7 @@ export function SiteHeader() {
   const home = "/";
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line-soft bg-[rgba(11,11,13,0.96)] backdrop-blur-[14px]">
+    <header className="site-header sticky top-0 z-50 border-b border-line-soft backdrop-blur-[14px]">
       <div className="shell flex min-h-[calc(var(--site-header-height)-1px)] items-center justify-between gap-7 max-[760px]:gap-3">
         <nav className="flex shrink-0 items-center gap-6 max-[760px]:gap-4 max-[540px]:gap-3" aria-label={locale === "pt" ? "Navegação principal" : "Main navigation"}>
           <Link className={navLink} href={home} aria-current={path === home ? "page" : undefined}>{t.nav.home}</Link>
