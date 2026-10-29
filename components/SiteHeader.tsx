@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { copy, site, type Locale } from "@/lib/portfolio";
-import { ArrowUpRight } from "./Icons";
+import { ArrowUpRight, MoonIcon, SunIcon } from "./Icons";
 import { useLanguage } from "./LanguageProvider";
+import { useTheme } from "./ThemeProvider";
 
 const navLink = "inline-flex min-h-11 items-center whitespace-nowrap px-1 text-[13px] font-semibold lowercase text-copy-secondary transition-colors duration-180 hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:shadow-[inset_0_-2px_var(--accent)] max-[760px]:text-xs max-[540px]:px-0";
 const locales: Locale[] = ["pt", "en"];
@@ -12,8 +13,12 @@ const locales: Locale[] = ["pt", "en"];
 export function SiteHeader() {
   const path = usePathname();
   const { locale, setLocale } = useLanguage();
+  const { mode, toggleMode } = useTheme();
   const t = copy[locale];
   const home = "/";
+  const themeLabel = mode === "light"
+    ? (locale === "pt" ? "Ativar modo escuro" : "Switch to dark mode")
+    : (locale === "pt" ? "Ativar modo claro" : "Switch to light mode");
 
   return (
     <header className="site-header sticky top-0 z-50 border-b border-line-soft backdrop-blur-[14px]">
@@ -24,6 +29,16 @@ export function SiteHeader() {
         </nav>
         <div className="flex shrink-0 items-center gap-5 max-[760px]:gap-3">
           <a className="inline-flex min-h-11 items-center gap-[5px] whitespace-nowrap text-[13px] font-semibold text-copy-secondary hover:text-foreground max-[760px]:text-xs" href={site.resume} target="_blank" rel="noopener noreferrer">{t.nav.resume}<ArrowUpRight /></a>
+          <button
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-[8px] border border-line-soft text-copy-secondary transition-colors hover:bg-surface hover:text-foreground"
+            type="button"
+            onClick={toggleMode}
+            aria-label={themeLabel}
+            aria-pressed={mode === "dark"}
+            title={themeLabel}
+          >
+            {mode === "dark" ? <SunIcon /> : <MoonIcon />}
+          </button>
           <div className="flex items-center gap-1 text-[13px] font-semibold max-[760px]:text-xs" role="group" aria-label={t.nav.language}>
             {locales.map((value, index) => (
               <span className="inline-flex items-center gap-1" key={value}>

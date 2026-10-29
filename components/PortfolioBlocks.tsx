@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { EmailCopy } from "./EmailCopy";
 import { copy, site, type Locale, type Project } from "@/lib/portfolio";
 import { ArrowDown, ArrowRight, ArrowUpRight } from "./Icons";
@@ -102,18 +101,19 @@ function ProjectVisual({ project, locale }: { project: Project; locale: Locale }
 
   return (
     <figure className={`${visualClass} project-visual--deepy`} aria-labelledby="deepy-visual-caption">
-      <Image
-        src="/projects/deepy-summary.png"
-        alt={isPt
-          ? "Tela escura com o resumo de um sistema de equações lineares e botão para salvar no Caderno Inteligente."
-          : "Dark screen with a summary of a system of linear equations and a button to save it to the Smart Notebook."}
-        width={526}
-        height={940}
-        sizes="(max-width: 900px) 80vw, 34vw"
-        className="project-visual__image"
-      />
+      <video
+        className="project-visual__video"
+        controls
+        preload="auto"
+        playsInline
+        aria-label={isPt ? "Vídeo de apresentação do DeepY" : "DeepY presentation video"}
+      >
+        <source src="/projects/deepy-demo-mobile.mp4" type="video/mp4" media="(max-width: 540px)" />
+        <source src="/projects/deepy-demo.mp4" type="video/mp4" />
+        {isPt ? "Seu navegador não oferece suporte à reprodução de vídeo." : "Your browser does not support video playback."}
+      </video>
       <figcaption id="deepy-visual-caption">
-        {isPt ? "Captura real da tela de resumo apresentada na página do DeepY." : "Real capture of the summary screen shown on the DeepY page."}
+        {isPt ? "Vídeo de apresentação do DeepY." : "DeepY presentation video."}
       </figcaption>
     </figure>
   );

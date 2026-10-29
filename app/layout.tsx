@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { SiteChrome } from "@/components/SiteChrome";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { site } from "@/lib/portfolio";
 import "./globals.css";
 
@@ -15,9 +16,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" data-motion="staggered">
       <body className={ibmPlexSans.variable}>
-        <LanguageProvider><SiteChrome>{children}</SiteChrome></LanguageProvider>
+        <ThemeProvider>
+          <LanguageProvider><SiteChrome>{children}</SiteChrome></LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
