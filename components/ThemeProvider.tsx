@@ -12,7 +12,7 @@ type ThemeContextValue = {
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 const modeStorageKey = "portfolio-theme";
 
-function isColorMode(value: string | null): value is ColorMode {
+function isColorMode(value: string | null | undefined): value is ColorMode {
   return value === "light" || value === "dark";
 }
 
