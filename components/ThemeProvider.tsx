@@ -22,18 +22,25 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let savedMode: ColorMode = "light";
+    const root = document.documentElement;
 
-    try {
-      const modeValue = window.localStorage.getItem(modeStorageKey);
-      if (isColorMode(modeValue)) savedMode = modeValue;
-    } catch {
-      // Keep the default theme when browser storage is unavailable.
+    if (isColorMode(root.dataset.theme)) {
+      savedMode = root.dataset.theme;
+    } else {
+      try {
+        const modeValue = window.localStorage.getItem(modeStorageKey);
+        if (isColorMode(modeValue)) savedMode = modeValue;
+      } catch {
+        // Keep the default theme when browser storage is unavailable.
+      }
     }
 
-    document.documentElement.dataset.theme = savedMode;
-    delete document.documentElement.dataset.darkPalette;
+    root.dataset.theme = savedMode;
+    delete root.dataset.darkPalette;
     setMode(savedMode);
     setReady(true);
+    const timer = window.setTimeout(() => { delete root.dataset.themePending; }, 220);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -56,7 +63,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   return (
     <ThemeContext.Provider value={{ mode, toggleMode }}>
-      {children}
+      <div className="theme-content">{children}</div>
+      <div className="theme-loading" role="status" aria-label="Carregando portfólio">
+        <span className="theme-loading__spinner" aria-hidden="true" />
+        <span className="sr-only">Carregando portfólio</span>
+      </div>
     </ThemeContext.Provider>
   );
 }
